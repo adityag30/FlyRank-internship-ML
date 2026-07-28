@@ -7,15 +7,21 @@
 
 ## 0. Abstract
 
-This project investigates how search performance and engagement metrics can be used to prioritize web pages for manual content review and refresh. The analysis uses the FlyRank ML Internship dataset, specifically the March 2026 public release, with aggregated Google Search Console and Google Analytics features. A Decision Tree classifier was trained and compared against a transparent rule-based baseline using the same train/test split, while also auditing the workflow for potential label leakage. The Decision Tree achieved stronger performance than the baseline, although the observed metrics should be interpreted carefully because the target was derived from some of the available features. The final output is a ranked action queue that helps SEO specialists and content editors identify pages that may benefit from manual review.
+Large content websites often contain thousands of pages, making it difficult for content teams to decide which pages should be refreshed first. This project investigates how search performance and engagement metrics can be used to prioritize content refresh opportunities using the FlyRank ML Internship March 2026 public dataset. The analysis combines exploratory data analysis, feature engineering, leakage auditing, a transparent rule-based baseline, and an interpretable Decision Tree classifier to rank pages for manual review.
+
+The Decision Tree was evaluated against the rule-based baseline using the same train/test split and achieved stronger ranking performance (Precision@50: 0.74 versus 0.66). Because the prediction target is derived from available search signals, the reported performance should be interpreted carefully and viewed as an upper bound rather than production performance. The final result is an explainable ranked action queue that supports SEO specialists and content editors in prioritizing manual content refresh decisions.
 
 ## 1. Problem framing
 
-This project supports the decision of which content pages should be prioritized for manual review and refresh. The unit of analysis is an individual content page represented by aggregated search and engagement metrics. The output is a ranked recommendation that classifies pages into action categories such as **Refresh Immediately**, **Review Content Quality**, **Monitor Performance**, or **No Immediate Action**.
+### Case Study
 
-The recommendations are intended for SEO specialists and content editors who must decide where to spend limited editorial effort. A false positive may cause unnecessary work on a page that does not need attention, while a false negative may leave a high-impact page unreviewed and reduce the opportunity for improving user engagement or search visibility.
+This project addresses a real content optimization problem faced by FlyRank: identifying which published pages should be reviewed and refreshed first when editorial resources are limited. Large content libraries often contain thousands of pages, making manual prioritization slow and inconsistent. The objective of this project is to support that prioritization process using historical search and engagement signals.
 
-Machine learning is appropriate because multiple search and engagement signals interact in ways that are difficult to capture with a single hand-written rule. The model is used as a decision-support tool rather than an automated decision maker.
+The unit of analysis is an individual content page represented by aggregated Google Search Console and Google Analytics metrics. The output is a ranked recommendation that classifies pages into action categories such as **Refresh Immediately**, **Review Content Quality**, **Monitor Performance**, or **No Immediate Action**.
+
+The intended users are SEO specialists and content editors who need to decide where to focus limited editorial effort. A false positive may cause unnecessary work on a page that does not require changes, while a false negative may leave a valuable page unoptimized and reduce opportunities for improving search visibility and user engagement.
+
+Machine learning is appropriate because multiple search and engagement signals interact in ways that are difficult to capture with simple threshold-based rules. The model is designed as a decision-support system that provides transparent recommendations rather than replacing human editorial judgment.
 
 ## 2. Data safety
 
@@ -76,8 +82,7 @@ The analysis also demonstrated the importance of auditing for label leakage. Hig
 
 ## 7. Recommendation
 
-The final output of this project is a ranked action queue that supports manual editorial decision making.
-
+"The final output of this project is an explainable ranked action queue that supports manual editorial decision-making for FlyRank's content refresh workflow."
 The recommended priority order is:
 
 1. Refresh Immediately
