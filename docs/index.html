@@ -1,1 +1,203 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content Refresh Opportunity Scoring</title>
+  <style>
+  body{
+      max-width:900px;
+      margin:40px auto;
+      padding:20px;
+      font-family:Georgia, "Times New Roman", serif;
+      line-height:1.8;
+      color:#222;
+      background:#fff;
+  }
+  h1{
+      text-align:center;
+      margin-bottom:5px;
+  }
+  .subtitle{
+      text-align:center;
+      color:#555;
+      margin-bottom:35px;
+  }
+  h2{
+      margin-top:45px;
+      border-bottom:1px solid #ccc;
+      padding-bottom:6px;
+  }
+  h3{
+      margin-top:25px;
+  }
+  p{
+      text-align:justify;
+  }
+  ul,ol{
+      margin-left:25px;
+  }
+  code{
+      background:#f4f4f4;
+      padding:2px 5px;
+      border-radius:3px;
+  }
+  table{
+      width:100%;
+      border-collapse:collapse;
+      margin:20px 0;
+  }
+  table,th,td{
+      border:1px solid #ccc;
+  }
+  th,td{
+      padding:10px;
+      text-align:left;
+  }
+  img{
+      max-width:100%;
+      display:block;
+      margin:20px auto;
+      border:1px solid #ddd;
+  }
+  footer{
+      margin-top:60px;
+      padding-top:20px;
+      border-top:1px solid #ccc;
+      text-align:center;
+      color:#666;
+      font-size:14px;
+  }
+  a{
+      color:#0b63ce;
+      text-decoration:none;
+  }
+  a:hover{
+      text-decoration:underline;
+  }
+  </style>
+</head>
+<body>
+  <h1>Content Refresh Opportunity Scoring</h1>  
+  <div class="subtitle">  
+    <strong>Author:</strong> Aditya Garg<br>   
+    <strong>Lane:</strong> Content Refresh Opportunity Scoring<br>    
+    <strong>Date:</strong> July 2026<br>    
+    <strong>Repository:</strong>   
+    <a href="https://github.com/adityag30/FlyRank-internship-ML">
+      github.com/adityag30/FlyRank-internship-ML
+    </a>
+  </div> 
+  <h2>Abstract</h2>  
+  <p>
+    This project investigates how search performance and engagement metrics can be used to prioritize web pages for manual content review and refresh. The analysis uses the FlyRank ML Internship dataset, specifically the March 2026 public release, with aggregated Google Search Console and Google Analytics features. A Decision Tree classifier was trained and compared against a transparent rule-based baseline using the same train/test split, while also auditing the workflow for potential label leakage. The Decision Tree achieved stronger performance than the baseline, although the observed metrics should be interpreted carefully because the target was derived from some of the available features. The final output is a ranked action queue that helps SEO specialists and content editors identify pages that may benefit from manual review.
+  </p>
+  <h2>1. Problem Framing</h2>
+  <p>
+    This project supports the decision of which content pages should be prioritized for manual review and refresh. The unit of analysis is an individual content page represented by aggregated search and engagement metrics. The output is a ranked recommendation that classifies pages into action categories such as <strong>Refresh Immediately</strong>, <strong>Review Content Quality</strong>, <strong>Monitor Performance</strong>, or <strong>No Immediate Action</strong>.
+  </p> 
+  <p>
+    The recommendations are intended for SEO specialists and content editors who must decide where to spend limited editorial effort. A false positive may cause unnecessary work on a page that does not need attention, while a false negative may leave a high-impact page unreviewed.
+  </p>
+  <p>
+    Machine learning is appropriate because multiple search and engagement signals interact in ways that are difficult to capture with a single hand-written rule. The model is used as a decision-support tool rather than an automated decision maker.
+  </p> 
+  <h2>2. Data Safety</h2>  
+  <p>
+    The analysis uses the public FlyRank ML Internship dataset for the March 2026 release. Data were queried from the DuckDB warehouse and aggregated at the content-page level using Google Search Console and Google Analytics metrics.
+  </p>
+  <ul>
+    <li>Google Search Console impressions</li>
+    <li>Google Search Console clicks</li>
+    <li>Average search position</li>
+    <li>Sessions</li>
+    <li>Engaged sessions</li>
+    <li>Click-through rate (CTR)</li>
+    <li>Engagement rate</li>
+  </ul> 
+  <p>
+    Trend-derived variables and identifiers were intentionally excluded to reduce leakage risk. No client-identifying information is included anywhere in this project.
+  </p>  
+  <h2>3. Baseline</h2>  
+  <p>
+    A transparent rule-based baseline was developed before training the Decision Tree model. The baseline identifies pages with high search visibility but relatively poor click-through performance using manually selected thresholds.
+  </p>
+  <p>
+    Both approaches were evaluated using the same train/test split to provide a fair comparison. The Decision Tree achieved stronger performance by learning interactions between multiple features.
+  </p>
+  <h2>4. Model Analysis</h2>
+  <p>
+    A Decision Tree classifier was selected because it provides interpretable decision rules that can be explained to non-technical stakeholders.
+  </p>
+  <p>
+    The prediction target is a binary proxy representing pages with high impressions but relatively low click-through rate. This proxy is intended for experimentation and should not be interpreted as ground truth.
+  </p>
+  <h2>5. Evaluation</h2>
+  <p>
+    The dataset was divided into training and testing subsets using a random train/test split because grouped validation was not possible with the released dataset.
+  </p>
+  <table>
+    <tr>
+      <th>Method</th>
+      <th>Precision@50</th>
+    </tr>
+    <tr>
+      <td>Decision Tree</td>
+      <td>0.74</td>
+    </tr>
+    <tr>
+      <td>Rule-based Baseline</td>
+      <td>0.66</td>
+    </tr>
+  </table>
+  <p>
+    The Decision Tree outperformed the baseline. However, because the target is partially derived from available features, the measured performance should be interpreted as an upper bound rather than expected production performance.
+  </p>
+  <h2>6. Interpretation</h2>
+  <p>
+    The model relied primarily on impressions, CTR, and engagement-related metrics when prioritizing pages for review. Feature importance analysis suggests these variables contributed most strongly to the final recommendations.
+  </p>
+  <p>
+    The analysis also demonstrates the importance of auditing for label leakage before interpreting model performance.
+  </p>
+  <h2>7. Recommendation</h2>
+  <p>The recommended priority order is:</p>
+  <ol>
+    <li>Refresh Immediately</li>
+    <li>Review Content Quality</li>
+    <li>Monitor Performance</li>
+    <li>No Immediate Action</li>
+  </ol>
+  <p>
+    Each recommendation is accompanied by a reason code to improve transparency and support manual editorial review.
+  </p>
+  <h2>8. Reproducibility</h2>
+  <p>
+    The complete workflow, notebooks, generated figures, and outputs are available in the GitHub repository.
+  </p>
+  <ul>
+    <li>DuckDB</li>
+    <li>Python</li>
+    <li>Pandas</li>
+    <li>Scikit-learn</li>
+    <li>Matplotlib</li>
+    <li>Jupyter Notebook</li>
+  </ul>
+  <p>
+    The model was trained using <code>random_state=42</code> to improve reproducibility.
+  </p>
+  <h2>9. Acknowledgments & Data Credit</h2>
+  <p>
+    This project was completed using the <strong>FlyRank ML Internship Dataset</strong>. The dataset and internship materials were provided for educational purposes through the FlyRank Machine Learning Internship.
+  </p>
+  <p>
+    <strong>Data Source:</strong><br>
+    <a href="https://internship.flyrank.ai">
+      https://internship.flyrank.ai
+    </a>
+  </p>
+  <footer>
+    Content Refresh Opportunity Scoring • Aditya Garg • July 2026
+  </footer>
+</body>
+</html>
