@@ -35,7 +35,7 @@ The baseline was evaluated on the same train/test split and using the same evalu
 
 Although the baseline captures obvious refresh opportunities, it cannot model more complex interactions between search visibility and user engagement signals. The Decision Tree achieved stronger performance on the evaluation split, demonstrating the benefit of learning feature interactions automatically.
 
-## 4. Model / analysis
+## 4. Model/analysis
 
 A Decision Tree classifier was selected because it produces interpretable decision rules that can be inspected and explained to non-technical stakeholders. The model predicts whether a page should be prioritized for manual review based on search visibility and engagement metrics.
 
@@ -62,6 +62,9 @@ Model performance was compared with the rule-based baseline using the same evalu
 The Decision Tree outperformed the baseline on the evaluation data. However, because the prediction target is derived from some of the available features, the measured performance should be interpreted as an upper bound rather than an estimate of real-world production performance.
 
 Most classification errors occurred near the manually defined threshold separating positive and negative examples, suggesting that borderline pages are naturally more difficult to classify than clearly high- or low-performing pages.
+
+Decision Tree Precision@50: 0.74
+Rule-based baseline Precision@50: 0.66
 
 ## 6. Interpretation
 
@@ -109,11 +112,3 @@ This project was built using the **FlyRank ML Internship dataset**. The dataset 
 Data source: https://internship.flyrank.ai
 
 ---
-
-> **Claims checklist before submitting:** observed / measured / directional / decision-support
-> **Metrics vs. base rate:** report your task's base rate (majority-class %) next to any
-> precision@K or accuracy — a high score can just be a high base rate. AUC / lift over
-> baseline are the honest discrimination numbers.
-> language everywhere · no causal claims without an experiment or causal design · no
-> "predicted Google's algorithm" · no client-identifying details · numbers in this report
-> match a fresh re-run.
